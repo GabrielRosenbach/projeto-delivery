@@ -1,6 +1,6 @@
 package br.com.gabrielrosenbach.model;
 
-public class PromocaoCliente {
+public class PromocaoCliente extends GenericModel<PromocaoCliente> {
 	
 	private Promocao promocao;
 	private Cliente cliente;

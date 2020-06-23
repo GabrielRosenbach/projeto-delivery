@@ -9,7 +9,9 @@ public abstract class GenericModel<T> implements Cloneable {
 	}
 
 	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
+		if (this.codigo == null) {
+			this.codigo = codigo;
+		}
 	}
 	
 	public T clone() throws CloneNotSupportedException {

@@ -13,16 +13,16 @@ public class Cliente extends GenericModel<Cliente> {
 	private String email;
 	private String senha;
 	private Boolean premium;
-	
+
 	private String rua;
 	private Integer numero;
 	private String cidade;
 	private String bairro;
 	private String estado;
 	private Integer cep;
-	
-	public Cliente(String nome, String telefone, Date dataNascimento, String email, String senha,
-			Boolean premium, String rua, Integer numero, String cidade, String bairro, String estado, Integer cep) {
+
+	public Cliente(String nome, String telefone, Date dataNascimento, String email, String senha, Boolean premium,
+			String rua, Integer numero, String cidade, String bairro, String estado, Integer cep) {
 		this.nome = nome;
 		this.telefone = telefone;
 		this.dataNascimento = dataNascimento;
@@ -35,10 +35,8 @@ public class Cliente extends GenericModel<Cliente> {
 		this.bairro = bairro;
 		this.estado = estado;
 		this.cep = cep;
-		
-		String primeiroNome = nome.contains(" ") ? nome.substring(0, nome.indexOf(" ")) : nome;
-		
-		this.identificacao = primeiroNome + String.format("%2f", DateUtil.getDia(dataNascimento)) + String.format("%2f", DateUtil.getMes(dataNascimento));
+
+		gerarIdentificacao();
 	}
 
 	public String getNome() {
@@ -139,6 +137,16 @@ public class Cliente extends GenericModel<Cliente> {
 
 	public String getIdentificacao() {
 		return identificacao;
+	}
+
+	public String gerarIdentificacao() {
+		String primeiroNome = nome.contains(" ") ? nome.substring(0, nome.indexOf(" ")) : nome;
+
+		this.identificacao = primeiroNome + String.format("%2f", DateUtil.getDia(dataNascimento))
+				+ String.format("%2f", DateUtil.getMes(dataNascimento));
+		
+		return this.identificacao;
+
 	}
 
 	@Override
