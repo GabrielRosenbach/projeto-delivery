@@ -1,0 +1,61 @@
+Tabela ingrediente:
+	-Código do ingrediente.
+	-Nome do ingrediente.
+
+Tabela produto:
+	-Código do produto.
+	-Nome do produto.
+	-Preço do produto.
+	-Quantidade de porções que o produto serve.
+	-Medida do produto. Pode ser gramas (g) ou mililitros (ml).
+	-Tipo do produto. Será criado um enumerator com 1 - Prato, 2 - Líquido, 3 - Condimento.
+
+Tabela ingrediente_produto:
+	-Faz a ligação de n:m de produto com ingrediente.
+
+Tabela cliente:
+	-Código do cliente.
+	-Nome do cliente.
+	-Telefone do cliente.
+	-Data de nascimento do cliente.
+	-Identificação do cliente. Indetificação chave gerada para o cliente. No projeto será usado PRIMEIRO_NOME+DIAMES_NASCIMENTO do cliente. A identificação surgiu como forma de buscar
+mais rapidamente por um cliente que está cadastrado, mas que está ligando pelo celular seu, ou de outra pessoa. Não será usado em nenhum lugar como identificacao secreta para acessar dados.
+	-Email do cliente.
+	-Senha do perfil.
+	-Se o cliente é premium.
+	-Rua do endereço do cliente.
+	-Número da moradia do cliente.
+	-Cidade do endereço do cliente.
+	-Bairro do endereço do cliente.
+	-Estado do endereço do cliente.
+	-CEP do endereço do cliente. O CEP será usado para localizar cidade e estado através do site de pesquisa de ceps.
+
+Tabela pedido:
+	-Código do pedido.
+	-Produto do pedido.
+	-Cliente do pedido.
+	-Data do pedido. Será usada para verificar se existiam promoções para este prato ou cliente, no dia do pedido.
+	-Quantidade de unidades do prato.
+	-Status do pedido. Vai ser usado um enumerator com os valores 1 - EM ESPERA, 2 - PREPARANDO, 3 - PRONTO PARA SER ENTREGUE, 4 - TRANSPORTANDO, 5 - ENTREGUE, 6 - IMPREVISTO NO PREPARO, 7 - IMPREVISTO NO TRANSPONTE.
+
+Tabela promocao:
+	-Código da promoção.
+	-Título da promoção.
+	-Descrição da promoção.
+	-Tipo da promoção. Será criado um enumerator com os valores:
+		*1 - DESCONTO EM PRODUTO(S): Desconto no preço dos pratos.
+		*2 - DESCONTO PARA CLIENTE(S): Será dado cupons de desconto para o cliente.
+		*3 - BRINDE PARA CLIENTE(S): Será dado um produto brinde para o cliente.
+	-Data de validade da promoção. Caso não seja informado data de validade, a promoção apenas terminará quando for cancelada. A data de validade é atualizada caso a promoção seja cancelada.
+	-Se a promoção é destinada apenas a clientes premium ou a todos.
+	
+Tabela promocao_produto:
+	-Utilizada para promoções ligadas a produtos, DESCONTO EM PRODUTO(S), ou ligadas a clientes, como BRINDE PARA CLIENTE(S).
+
+Tabela promocao_cliente:
+	-Utilizada para promoções de desconto à clientes específicos, como DESCONTO PARA CLIENTE(S).
+
+Tabela desconto:
+	-Tabela responsável por promoções de desconto em produtos.
+
+	
