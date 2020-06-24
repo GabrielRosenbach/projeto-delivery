@@ -6,11 +6,11 @@ import br.com.gabrielrosenbach.model.Ingrediente;
 
 public interface IngredienteDAO {
 
-	Ingrediente salvar(Ingrediente entidade) throws CloneNotSupportedException;
+	Ingrediente salvar(Ingrediente entidade);
 	
 	Boolean excluir(Integer codigo);
 	
 	Ingrediente buscarPorId(Integer codigo);
 	
-	List<Ingrediente> buscarTodos() throws CloneNotSupportedException;
+	List<Ingrediente> buscarTodos();
 }

@@ -3,10 +3,11 @@ package br.com.gabrielrosenbach.dao;
 import java.util.List;
 
 import br.com.gabrielrosenbach.model.PromocaoProduto;
+import br.com.gabrielrosenbach.util.CadastroNaoEncontradoException;
 
 public interface PromocaoProdutoDAO {
 
-	PromocaoProduto salvar(PromocaoProduto entidade) throws CloneNotSupportedException;
+	public void salvar(Integer codigoPromocao, List<PromocaoProduto> entidades) throws CloneNotSupportedException, CadastroNaoEncontradoException;
 	
 	Boolean excluir(Integer codigo);
 	

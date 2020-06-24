@@ -18,4 +18,10 @@ public class DateUtil {
 		
 		return calendar.get(Calendar.MONTH) + 1;
 	}
+	
+	public static Date criarData(Integer dia, Integer mes, Integer ano) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(ano, mes - 1, dia);
+		return calendar.getTime();
+	}
 }

@@ -14,18 +14,13 @@ public class PromocaoClienteDAOImpl implements PromocaoClienteDAO {
 	private static int autoIncrement = 1;
 
 	@Override
-	public PromocaoCliente salvar(PromocaoCliente entidade) throws CloneNotSupportedException, CadastroNaoEncontradoException {
-		if (entidade.getCodigo() == null) {
-			entidade.setCodigo(autoIncrement);
+	public void salvar(Integer codigoPromocao, List<PromocaoCliente> entidades) throws CloneNotSupportedException, CadastroNaoEncontradoException {
+		lista.removeIf(x -> x.getPromocao().getCodigo().equals(codigoPromocao));
+		for (PromocaoCliente pc : entidades) {
+			pc.setCodigo(autoIncrement);
 			autoIncrement++;
-			lista.add(entidade.clone());
-			return entidade;
-		} else {
-			PromocaoCliente antigo = buscaInterna(entidade);
-			antigo.setPromocao(entidade.getPromocao());
-			antigo.setCliente(entidade.getCliente());
-			return antigo.clone();
 		}
+		lista.addAll(entidades);
 	}
 
 	@Override
@@ -33,19 +28,11 @@ public class PromocaoClienteDAOImpl implements PromocaoClienteDAO {
 		return lista.removeIf(x -> x.getCodigo().equals(codigo));
 	}
 
-	private PromocaoCliente buscaInterna(PromocaoCliente entidade) {
-		Optional<PromocaoCliente> optional = lista.stream().filter(x -> x.equals(entidade)).findFirst();
-		if (optional.isPresent()) {
-			return optional.get();
-		}
-		throw new CadastroNaoEncontradoException();
-	}
-
 	@Override
-	public PromocaoCliente buscarPorId(Integer codigo) {
+	public PromocaoCliente buscarPorId(Integer codigo) throws CloneNotSupportedException {
 		Optional<PromocaoCliente> optional = lista.stream().filter(x -> x.getCodigo().equals(codigo)).findFirst();
 		if (optional.isPresent()) {
-			return optional.get();
+			return optional.get().clone();
 		}
 		throw new CadastroNaoEncontradoException();
 	}

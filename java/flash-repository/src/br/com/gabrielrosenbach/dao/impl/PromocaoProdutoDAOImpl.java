@@ -14,31 +14,18 @@ public class PromocaoProdutoDAOImpl implements PromocaoProdutoDAO {
 	private static int autoIncrement = 1;
 
 	@Override
-	public PromocaoProduto salvar(PromocaoProduto entidade) throws CloneNotSupportedException, CadastroNaoEncontradoException {
-		if (entidade.getCodigo() == null) {
-			entidade.setCodigo(autoIncrement);
+	public void salvar(Integer codigoPromocao, List<PromocaoProduto> entidades) throws CloneNotSupportedException, CadastroNaoEncontradoException {
+		lista.removeIf(x -> x.getPromocao().getCodigo().equals(codigoPromocao));
+		for (PromocaoProduto pp : entidades) {
+			pp.setCodigo(autoIncrement);
 			autoIncrement++;
-			lista.add(entidade.clone());
-			return entidade;
-		} else {
-			PromocaoProduto antigo = buscaInterna(entidade);
-			antigo.setProduto(entidade.getProduto());
-			antigo.setPromocao(entidade.getPromocao());
-			return antigo.clone();
 		}
+		lista.addAll(entidades);
 	}
 
 	@Override
 	public Boolean excluir(Integer codigo) {
 		return lista.removeIf(x -> x.getCodigo().equals(codigo));
-	}
-
-	private PromocaoProduto buscaInterna(PromocaoProduto entidade) {
-		Optional<PromocaoProduto> optional = lista.stream().filter(x -> x.equals(entidade)).findFirst();
-		if (optional.isPresent()) {
-			return optional.get();
-		}
-		throw new CadastroNaoEncontradoException();
 	}
 
 	@Override

@@ -12,19 +12,40 @@ public class IngredienteDAOImpl implements IngredienteDAO {
 
 	private static List<Ingrediente> lista = new ArrayList<>();
 	private static int autoIncrement = 1;
+	
+	static {
+		IngredienteDAO dao = new IngredienteDAOImpl();
+			dao.salvar(new Ingrediente("Alho"));
+			dao.salvar(new Ingrediente("Carne Gado"));
+			dao.salvar(new Ingrediente("Tomate"));
+			dao.salvar(new Ingrediente("Cebola"));
+			dao.salvar(new Ingrediente("Pimenta"));
+			dao.salvar(new Ingrediente("Batata"));
+			dao.salvar(new Ingrediente("Frango"));
+			dao.salvar(new Ingrediente("Requeijão"));
+			dao.salvar(new Ingrediente("Presunto"));
+	}
 
 	@Override
-	public Ingrediente salvar(Ingrediente entidade) throws CloneNotSupportedException, CadastroNaoEncontradoException {
-		if (entidade.getCodigo() == null) {
-			entidade.setCodigo(autoIncrement);
-			autoIncrement++;
-			lista.add(entidade.clone());
-			return entidade;
-		} else {
-			Ingrediente antigo = buscaInterna(entidade);
-			antigo.setNome(entidade.getNome());
-			return antigo.clone();
+	public Ingrediente salvar(Ingrediente entidade) {
+		Ingrediente ingredienteRetorno = null;
+		try {
+			if (entidade.getCodigo() == null) {
+				entidade.setCodigo(autoIncrement);
+				autoIncrement++;
+				
+				lista.add(entidade.clone());
+			
+				ingredienteRetorno = entidade;
+			} else {
+				Ingrediente antigo = buscaInterna(entidade);
+				antigo.setNome(entidade.getNome());
+				ingredienteRetorno = antigo.clone();
+			}
+		} catch (CloneNotSupportedException e) {
+			System.out.println(e.getMessage());
 		}
+		return ingredienteRetorno;
 	}
 
 	@Override
@@ -50,13 +71,15 @@ public class IngredienteDAOImpl implements IngredienteDAO {
 	}
 
 	@Override
-	public List<Ingrediente> buscarTodos() throws CloneNotSupportedException {
+	public List<Ingrediente> buscarTodos() {
 		List<Ingrediente> novaLista = new ArrayList<>();
-
 		for (Ingrediente entidade : lista) {
-			novaLista.add(entidade.clone());
+			try {
+				novaLista.add(entidade.clone());
+			} catch (CloneNotSupportedException e) {
+				System.out.println(e.getMessage());
+			}
 		}
-
 		return novaLista;
 	}
 

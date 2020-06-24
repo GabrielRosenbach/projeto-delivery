@@ -22,9 +22,9 @@ public class PedidoDAOImpl implements PedidoDAO {
 			return entidade;
 		} else {
 			Pedido antigo = buscaInterna(entidade);
-			antigo.setCliente(entidade.getCliente());
+			antigo.setCliente(entidade.getCliente().clone());
 			antigo.setDataPedido(entidade.getDataPedido());
-			antigo.setProduto(entidade.getProduto());
+			antigo.setProduto(entidade.getProduto().clone());
 			antigo.setQuantidade(entidade.getQuantidade());
 			antigo.setStatus(entidade.getStatus());
 			return antigo.clone();

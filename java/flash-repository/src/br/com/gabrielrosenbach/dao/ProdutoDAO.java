@@ -6,11 +6,11 @@ import br.com.gabrielrosenbach.model.Produto;
 
 public interface ProdutoDAO {
 
-	Produto salvar(Produto entidade) throws CloneNotSupportedException;
+	Produto salvar(Produto entidade);
 	
 	Boolean excluir(Integer codigo);
 	
 	Produto buscarPorId(Integer codigo);
 	
-	List<Produto> buscarTodos() throws CloneNotSupportedException;
+	List<Produto> buscarTodos();
 }

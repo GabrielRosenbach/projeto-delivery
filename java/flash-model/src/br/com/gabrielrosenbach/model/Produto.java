@@ -4,14 +4,14 @@ public class Produto extends GenericModel<Produto> {
 
 	private String nome;
 	private Double preco;
-	private Integer procao;
+	private Integer porcao;
 	private Double medida;
 	private Integer tipo;
 	
-	public Produto(String nome, Double preco, Integer procao, Double medida, Integer tipo) {
+	public Produto(String nome, Double preco, Integer porcao, Double medida, Integer tipo) {
 		this.nome = nome;
 		this.preco = preco;
-		this.procao = procao;
+		this.porcao = porcao;
 		this.medida = medida;
 		this.tipo = tipo;
 	}
@@ -47,6 +47,14 @@ public class Produto extends GenericModel<Produto> {
 	public void setTipo(Integer tipo) {
 		this.tipo = tipo;
 	}
+	
+	public Integer getPorcao() {
+		return porcao;
+	}
+
+	public void setPorcao(Integer porcao) {
+		this.porcao = porcao;
+	}
 
 	@Override
 	public int hashCode() {
@@ -55,7 +63,7 @@ public class Produto extends GenericModel<Produto> {
 		result = prime * result + ((medida == null) ? 0 : medida.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result + ((preco == null) ? 0 : preco.hashCode());
-		result = prime * result + ((procao == null) ? 0 : procao.hashCode());
+		result = prime * result + ((porcao == null) ? 0 : porcao.hashCode());
 		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
 		return result;
 	}
@@ -84,10 +92,10 @@ public class Produto extends GenericModel<Produto> {
 				return false;
 		} else if (!preco.equals(other.preco))
 			return false;
-		if (procao == null) {
-			if (other.procao != null)
+		if (porcao == null) {
+			if (other.porcao != null)
 				return false;
-		} else if (!procao.equals(other.procao))
+		} else if (!porcao.equals(other.porcao))
 			return false;
 		if (tipo == null) {
 			if (other.tipo != null)

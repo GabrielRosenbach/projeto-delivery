@@ -22,7 +22,7 @@ public class DescontoDAOImpl implements DescontoDAO {
 			return entidade;
 		} else {
 			Desconto antigo = buscaInterna(entidade);
-			antigo.setPromocao(entidade.getPromocao());
+			antigo.setPromocao(entidade.getPromocao().clone());
 			antigo.setTipo(entidade.getTipo());
 			antigo.setValor(entidade.getValor());
 			return antigo.clone();
