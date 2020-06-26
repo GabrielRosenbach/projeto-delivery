@@ -21,8 +21,9 @@ public class Cliente extends GenericModel<Cliente> {
 	private String estado;
 	private Integer cep;
 
-	public Cliente(String nome, String telefone, Date dataNascimento, String email, String senha, Boolean premium,
+	public Cliente(Integer codigo, String nome, String telefone, Date dataNascimento, String email, String senha, Boolean premium,
 			String rua, Integer numero, String cidade, String bairro, String estado, Integer cep) {
+		super(codigo);
 		this.nome = nome;
 		this.telefone = telefone;
 		this.dataNascimento = dataNascimento;
@@ -142,8 +143,8 @@ public class Cliente extends GenericModel<Cliente> {
 	public String gerarIdentificacao() {
 		String primeiroNome = nome.contains(" ") ? nome.substring(0, nome.indexOf(" ")) : nome;
 
-		this.identificacao = primeiroNome + String.format("%2f", DateUtil.getDia(dataNascimento))
-				+ String.format("%2f", DateUtil.getMes(dataNascimento));
+		this.identificacao = primeiroNome.toLowerCase() + String.format("%2d", DateUtil.getDia(dataNascimento))
+				+ String.format("%2d", DateUtil.getMes(dataNascimento));
 		
 		return this.identificacao;
 

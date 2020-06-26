@@ -7,6 +7,7 @@ import br.com.gabrielrosenbach.bo.IngredienteProdutoBO;
 import br.com.gabrielrosenbach.bo.ProdutoBO;
 import br.com.gabrielrosenbach.converter.DtoConverter;
 import br.com.gabrielrosenbach.dao.ProdutoDAO;
+import br.com.gabrielrosenbach.dao.exception.CadastroNaoEncontradoException;
 import br.com.gabrielrosenbach.dao.impl.ProdutoDAOImpl;
 import br.com.gabrielrosenbach.dto.IngredienteDTO;
 import br.com.gabrielrosenbach.dto.ProdutoDTO;
@@ -22,20 +23,13 @@ public class ProdutoBOImpl implements ProdutoBO {
 
 	@Override
 	public ProdutoDTO salvar(ProdutoDTO produtoDTO) {
-		String nome = produtoDTO.getNome();
-		Double preco = produtoDTO.getPreco();
-		Integer porcao = produtoDTO.getPorcao();
-		Double medida = produtoDTO.getMedida();
-		Integer tipo = produtoDTO.getTipo();
 
-		Produto produto = new Produto(nome, preco, porcao, medida, tipo);
+		Produto produto = new Produto(produtoDTO.getCodigo(), produtoDTO.getNome(), produtoDTO.getPreco(), produtoDTO.getPorcao(), produtoDTO.getMedida(), produtoDTO.getTipo());
 		produto = produtoDAO.salvar(produto);
 
 		ingredienteProdutoBO.salvar(produto.getCodigo(), produtoDTO.getIngredientes());
 
-		ProdutoDTO retornoDTO = new ProdutoDTO(produto.getCodigo(), produto.getNome(), preco, porcao, medida, tipo,
-				null);
-		return retornoDTO;
+		return DtoConverter.ProdutoToProdutoDTO(produto);
 	}
 
 	@Override
@@ -45,7 +39,13 @@ public class ProdutoBOImpl implements ProdutoBO {
 
 	@Override
 	public ProdutoDTO buscarPorId(Integer codigo) {
-		return DtoConverter.ProdutoToProdutoDTO(produtoDAO.buscarPorId(codigo));
+		ProdutoDTO produtoDTO = null;
+		try {
+			produtoDTO = DtoConverter.ProdutoToProdutoDTO(produtoDAO.buscarPorId(codigo));
+		} catch (CadastroNaoEncontradoException | CloneNotSupportedException e) {
+			System.out.println(e.getMessage());
+		}
+		return produtoDTO;
 	}
 
 	@Override

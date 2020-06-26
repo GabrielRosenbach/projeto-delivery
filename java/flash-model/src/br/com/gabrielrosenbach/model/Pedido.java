@@ -10,12 +10,19 @@ public class Pedido extends GenericModel<Pedido> {
 	private Integer quantidade;
 	private Integer status;
 	
-	public Pedido(Produto produto, Cliente cliente, Date dataPedido, Integer quantidade, Integer status) {
+	private Integer codigoCliente;
+	private Integer codigoProduto;
+
+	public Pedido(Integer codigo, Produto produto, Cliente cliente, Date dataPedido, Integer quantidade, Integer status,
+			Integer codigoCliente, Integer codigoProduto) {
+		super(codigo);
 		this.produto = produto;
 		this.cliente = cliente;
 		this.dataPedido = dataPedido;
 		this.quantidade = quantidade;
 		this.status = status;
+		this.codigoCliente = codigoCliente;
+		this.codigoProduto = codigoProduto;
 	}
 
 	public Produto getProduto() {
@@ -56,6 +63,22 @@ public class Pedido extends GenericModel<Pedido> {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	
+	public Integer getCodigoCliente() {
+		return codigoCliente;
+	}
+
+	public void setCodigoCliente(Integer codigoCliente) {
+		this.codigoCliente = codigoCliente;
+	}
+
+	public Integer getCodigoProduto() {
+		return codigoProduto;
+	}
+
+	public void setCodigoProduto(Integer codigoProduto) {
+		this.codigoProduto = codigoProduto;
 	}
 
 	@Override

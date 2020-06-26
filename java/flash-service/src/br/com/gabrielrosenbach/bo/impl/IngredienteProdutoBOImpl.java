@@ -7,6 +7,7 @@ import br.com.gabrielrosenbach.bo.IngredienteProdutoBO;
 import br.com.gabrielrosenbach.converter.DtoConverter;
 import br.com.gabrielrosenbach.dao.IngredienteDAO;
 import br.com.gabrielrosenbach.dao.IngredienteProdutoDAO;
+import br.com.gabrielrosenbach.dao.exception.CadastroNaoEncontradoException;
 import br.com.gabrielrosenbach.dao.impl.IngredienteDAOImpl;
 import br.com.gabrielrosenbach.dao.impl.IngredienteProdutoDAOImpl;
 import br.com.gabrielrosenbach.dto.IngredienteDTO;
@@ -22,40 +23,38 @@ public class IngredienteProdutoBOImpl implements IngredienteProdutoBO {
 
 	@Override
 	public List<IngredienteProdutoDTO> salvar(Integer codigoProduto, List<Integer> codigosIngredientes) {
-		
+
 		List<IngredienteProduto> list = ingredienteProdutoDAO.salvar(codigoProduto, codigosIngredientes);
 		return DtoConverter.IngredienteProdutoToIngredienteProdutoDTO(list);
 	}
 
 	@Override
 	public Boolean excluir(Integer codigo) {
-		return ingredienteDAO.excluir(codigo);
+		return ingredienteProdutoDAO.excluir(codigo);
 	}
 
 	@Override
 	public IngredienteProdutoDTO buscarPorId(Integer codigo) {
-		return DtoConverter.IngredienteProdutoToIngredienteProdutoDTO(ingredienteProdutoDAO.buscarPorId(codigo));
+		IngredienteProdutoDTO ingredienteProdutoDTO = null;
+		try {
+			ingredienteProdutoDTO = DtoConverter.IngredienteProdutoToIngredienteProdutoDTO(ingredienteProdutoDAO.buscarPorId(codigo));
+		} catch (CadastroNaoEncontradoException e) {
+			System.out.println(e.getMessage());
+		}
+		return ingredienteProdutoDTO;
 	}
 
 	@Override
 	public List<IngredienteProdutoDTO> buscarTodos() {
 		List<IngredienteProduto> list = new ArrayList<>();
-		try {
-			list = ingredienteProdutoDAO.buscarTodos();
-		} catch (CloneNotSupportedException e) {
-			System.out.println(e.getMessage());
-		}
+		list = ingredienteProdutoDAO.buscarTodos();
 		return DtoConverter.IngredienteProdutoToIngredienteProdutoDTO(list);
 	}
 
 	@Override
 	public List<IngredienteDTO> buscarIngredientes(Integer codigoProduto) {
 		List<Ingrediente> listaRetorno = new ArrayList<>();
-		try {
-			listaRetorno = ingredienteProdutoDAO.buscarIngredientes(codigoProduto);
-		} catch (CloneNotSupportedException e) {
-			System.out.println(e.getMessage());
-		}
+		listaRetorno = ingredienteProdutoDAO.buscarIngredientes(codigoProduto);
 		return DtoConverter.IngredienteToIngredienteDTO(listaRetorno);
 	}
 }

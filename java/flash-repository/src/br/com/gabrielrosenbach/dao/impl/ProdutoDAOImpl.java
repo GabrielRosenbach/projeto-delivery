@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import br.com.gabrielrosenbach.dao.ProdutoDAO;
+import br.com.gabrielrosenbach.dao.exception.CadastroNaoEncontradoException;
 import br.com.gabrielrosenbach.enumerator.TipoProdutoEnum;
 import br.com.gabrielrosenbach.model.Produto;
-import br.com.gabrielrosenbach.util.CadastroNaoEncontradoException;
 
 public class ProdutoDAOImpl implements ProdutoDAO {
 
@@ -16,7 +16,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 
 	static {
 		ProdutoDAO dao = new ProdutoDAOImpl();
-		dao.salvar(new Produto("Bife", 20.00, 2, 600.00, TipoProdutoEnum.PRATO.getValor()));
+		dao.salvar(new Produto(null, "Bife", 20.00, 2, 600.00, TipoProdutoEnum.PRATO.getValor()));
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 				antigo.setTipo(entidade.getTipo());
 				ProdutoRetorno = antigo.clone();
 			}
-		} catch (CloneNotSupportedException e) {
+		} catch (CloneNotSupportedException | CadastroNaoEncontradoException e) {
 			System.out.println(e.getMessage());
 		}
 
@@ -50,7 +50,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 		return lista.removeIf(x -> x.getCodigo().equals(codigo));
 	}
 
-	private Produto buscaInterna(Produto entidade) {
+	private Produto buscaInterna(Produto entidade) throws CadastroNaoEncontradoException {
 		Optional<Produto> optional = lista.stream().filter(x -> x.equals(entidade)).findFirst();
 		if (optional.isPresent()) {
 			return optional.get();
@@ -59,10 +59,10 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 	}
 
 	@Override
-	public Produto buscarPorId(Integer codigo) {
+	public Produto buscarPorId(Integer codigo) throws CadastroNaoEncontradoException, CloneNotSupportedException {
 		Optional<Produto> optional = lista.stream().filter(x -> x.getCodigo().equals(codigo)).findFirst();
 		if (optional.isPresent()) {
-			return optional.get();
+			return optional.get().clone();
 		}
 		throw new CadastroNaoEncontradoException();
 	}

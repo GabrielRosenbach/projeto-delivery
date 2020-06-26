@@ -5,7 +5,7 @@ import java.util.Map;
 
 public enum TipoDescontoEnum {
 	
-	PRECO_FIXO(1, "Preço Fixo"), PORCENTAGEM(2, "Porcentagem");
+	PRECO_FIXO(1, "PreÃ§o Fixo"), PORCENTAGEM(2, "Porcentagem");
 
 	private Integer valor;
 	private String descricao;

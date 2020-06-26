@@ -6,11 +6,13 @@ import br.com.gabrielrosenbach.model.Desconto;
 
 public interface DescontoDAO {
 
-	Desconto salvar(Desconto entidade) throws CloneNotSupportedException;
+	Desconto salvar(Desconto entidade);
 	
 	Boolean excluir(Integer codigo);
 	
 	Desconto buscarPorId(Integer codigo);
 	
-	List<Desconto> buscarTodos() throws CloneNotSupportedException;
+	List<Desconto> buscarTodos();
+	
+	Desconto buscarPorPromocao(Integer codigoPromocao);
 }

@@ -142,13 +142,19 @@ public class ClienteDTO extends GenericDTO {
 		this.identificacao = identificacao;
 	}
 	
-	public String gerarIdentificacao() {
-		String primeiroNome = nome.contains(" ") ? nome.substring(0, nome.indexOf(" ")) : nome;
-
-		this.identificacao = primeiroNome + String.format("%2f", DateUtil.getDia(dataNascimento))
-				+ String.format("%2f", DateUtil.getMes(dataNascimento));
-		
-		return this.identificacao;
+	@Override
+	public String toString() {
+		return "Cliente: " + nome + ", Telefone: " + telefone + ", Data de Nascimento: " + DateUtil.format(dataNascimento, DateUtil.FORMATO_DD_MM_YYYY)
+				+ ", Identificação: " + identificacao + ", Código: " + getCodigo();
 	}
 	
+	public String toStringCliente() {
+		return "Cliente: " + nome + ", Telefone: " + telefone + ", Data de Nascimento: " + DateUtil.format(dataNascimento, DateUtil.FORMATO_DD_MM_YYYY)
+				+ ", Identificação: " + identificacao + ", Email: " + email + ", Senha: " + senha + ", É Premium: " + premium;
+	}
+	
+	public String toStringEndereco() {
+		return "Endereço: " + rua + ", Numero: " + numero + ", Cidade: " + cidade + ", Bairro: " + bairro + ", Estado: "
+				+ estado + ", CEP: " + cep;
+	}
 }

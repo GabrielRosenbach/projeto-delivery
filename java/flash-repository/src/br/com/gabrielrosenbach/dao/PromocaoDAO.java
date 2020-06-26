@@ -6,11 +6,9 @@ import br.com.gabrielrosenbach.model.Promocao;
 
 public interface PromocaoDAO {
 
-	Promocao salvar(Promocao entidade) throws CloneNotSupportedException;
-	
+	Promocao salvar(Promocao entidade);
+
 	Boolean excluir(Integer codigo);
-	
+
 	Promocao buscarPorId(Integer codigo);
-	
-	List<Promocao> buscarTodos() throws CloneNotSupportedException;
 }

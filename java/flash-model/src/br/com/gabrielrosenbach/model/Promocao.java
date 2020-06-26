@@ -10,7 +10,8 @@ public class Promocao extends GenericModel<Promocao> {
 	private Date dataValidade;
 	private Boolean apenasPremium;
 	
-	public Promocao(String titulo, String descricao, Integer tipo, Date dataValidade, Boolean apenasPremium) {
+	public Promocao(Integer codigo, String titulo, String descricao, Integer tipo, Date dataValidade, Boolean apenasPremium) {
+		super(codigo);
 		this.titulo = titulo;
 		this.descricao = descricao;
 		this.tipo = tipo;

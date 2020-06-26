@@ -5,7 +5,8 @@ public class IngredienteProduto extends GenericModel<IngredienteProduto> {
 	private Ingrediente ingrediente;
 	private Produto produto;
 	
-	public IngredienteProduto(Ingrediente ingrediente, Produto produto) {
+	public IngredienteProduto(Integer codigo, Ingrediente ingrediente, Produto produto) {
+		super(codigo);
 		this.ingrediente = ingrediente;
 		this.produto = produto;
 	}

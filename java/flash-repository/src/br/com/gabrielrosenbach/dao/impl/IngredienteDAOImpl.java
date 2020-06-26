@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import br.com.gabrielrosenbach.dao.IngredienteDAO;
+import br.com.gabrielrosenbach.dao.exception.CadastroNaoEncontradoException;
 import br.com.gabrielrosenbach.model.Ingrediente;
-import br.com.gabrielrosenbach.util.CadastroNaoEncontradoException;
 
 public class IngredienteDAOImpl implements IngredienteDAO {
 
@@ -15,15 +15,15 @@ public class IngredienteDAOImpl implements IngredienteDAO {
 	
 	static {
 		IngredienteDAO dao = new IngredienteDAOImpl();
-			dao.salvar(new Ingrediente("Alho"));
-			dao.salvar(new Ingrediente("Carne Gado"));
-			dao.salvar(new Ingrediente("Tomate"));
-			dao.salvar(new Ingrediente("Cebola"));
-			dao.salvar(new Ingrediente("Pimenta"));
-			dao.salvar(new Ingrediente("Batata"));
-			dao.salvar(new Ingrediente("Frango"));
-			dao.salvar(new Ingrediente("Requeijão"));
-			dao.salvar(new Ingrediente("Presunto"));
+			dao.salvar(new Ingrediente(null, "Alho"));
+			dao.salvar(new Ingrediente(null, "Carne Gado"));
+			dao.salvar(new Ingrediente(null, "Tomate"));
+			dao.salvar(new Ingrediente(null, "Cebola"));
+			dao.salvar(new Ingrediente(null, "Pimenta"));
+			dao.salvar(new Ingrediente(null, "Batata"));
+			dao.salvar(new Ingrediente(null, "Frango"));
+			dao.salvar(new Ingrediente(null, "Requeijão"));
+			dao.salvar(new Ingrediente(null, "Presunto"));
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class IngredienteDAOImpl implements IngredienteDAO {
 				antigo.setNome(entidade.getNome());
 				ingredienteRetorno = antigo.clone();
 			}
-		} catch (CloneNotSupportedException e) {
+		} catch (CloneNotSupportedException | CadastroNaoEncontradoException e) {
 			System.out.println(e.getMessage());
 		}
 		return ingredienteRetorno;
@@ -53,7 +53,7 @@ public class IngredienteDAOImpl implements IngredienteDAO {
 		return lista.removeIf(x -> x.getCodigo().equals(codigo));
 	}
 
-	private Ingrediente buscaInterna(Ingrediente entidade) {
+	private Ingrediente buscaInterna(Ingrediente entidade) throws CadastroNaoEncontradoException {
 		Optional<Ingrediente> optional = lista.stream().filter(x -> x.equals(entidade)).findFirst();
 		if (optional.isPresent()) {
 			return optional.get();
@@ -62,7 +62,7 @@ public class IngredienteDAOImpl implements IngredienteDAO {
 	}
 
 	@Override
-	public Ingrediente buscarPorId(Integer codigo) {
+	public Ingrediente buscarPorId(Integer codigo) throws CadastroNaoEncontradoException {
 		Optional<Ingrediente> optional = lista.stream().filter(x -> x.getCodigo().equals(codigo)).findFirst();
 		if (optional.isPresent()) {
 			return optional.get();

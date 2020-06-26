@@ -8,7 +8,8 @@ public class Produto extends GenericModel<Produto> {
 	private Double medida;
 	private Integer tipo;
 	
-	public Produto(String nome, Double preco, Integer porcao, Double medida, Integer tipo) {
+	public Produto(Integer codigo, String nome, Double preco, Integer porcao, Double medida, Integer tipo) {
+		super(codigo);
 		this.nome = nome;
 		this.preco = preco;
 		this.porcao = porcao;

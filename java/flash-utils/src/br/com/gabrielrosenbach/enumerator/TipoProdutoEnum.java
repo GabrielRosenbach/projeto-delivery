@@ -5,7 +5,7 @@ import java.util.Map;
 
 public enum TipoProdutoEnum {
 
-	PRATO(1, "Prato"), LIQUIDO(2, "Líquido"), CONDIMENTO(3, "Condimento");
+	PRATO(1, "Prato"), LIQUIDO(2, "LÃ­quido"), CONDIMENTO(3, "Condimento");
 
 	private Integer valor;
 	private String descricao;

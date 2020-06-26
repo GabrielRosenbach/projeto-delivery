@@ -5,7 +5,8 @@ public class PromocaoCliente extends GenericModel<PromocaoCliente> {
 	private Promocao promocao;
 	private Cliente cliente;
 
-	public PromocaoCliente(Promocao promocao, Cliente cliente) {
+	public PromocaoCliente(Integer codigo, Promocao promocao, Cliente cliente) {
+		super(codigo);
 		this.promocao = promocao;
 		this.cliente = cliente;
 	}

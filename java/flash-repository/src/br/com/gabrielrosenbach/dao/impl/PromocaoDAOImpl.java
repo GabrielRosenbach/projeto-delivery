@@ -5,30 +5,48 @@ import java.util.List;
 import java.util.Optional;
 
 import br.com.gabrielrosenbach.dao.PromocaoDAO;
+import br.com.gabrielrosenbach.dao.exception.CadastroNaoEncontradoException;
+import br.com.gabrielrosenbach.enumerator.TipoPromocaoEnum;
 import br.com.gabrielrosenbach.model.Promocao;
-import br.com.gabrielrosenbach.util.CadastroNaoEncontradoException;
+import br.com.gabrielrosenbach.util.DateUtil;
 
 public class PromocaoDAOImpl implements PromocaoDAO {
 
 	private static List<Promocao> lista = new ArrayList<>();
 	private static int autoIncrement = 1;
 
+	static {
+		PromocaoDAO dao = new PromocaoDAOImpl();
+		
+		Promocao promocao = new Promocao(null, "5% de desconto nos produtos selecionados",
+				"5% de desconto em pratos japoneses", TipoPromocaoEnum.DESCONTO_EM_PRODUTO.getValor(),
+				DateUtil.criarData(02, 06, 2020), false);
+		
+		dao.salvar(promocao);
+	}
+
 	@Override
-	public Promocao salvar(Promocao entidade) throws CloneNotSupportedException, CadastroNaoEncontradoException {
-		if (entidade.getCodigo() == null) {
-			entidade.setCodigo(autoIncrement);
-			autoIncrement++;
-			lista.add(entidade.clone());
-			return entidade;
-		} else {
-			Promocao antigo = buscaInterna(entidade);
-			antigo.setApenasPremium(entidade.getApenasPremium());
-			antigo.setDataValidade(entidade.getDataValidade());
-			antigo.setDescricao(entidade.getDescricao());
-			antigo.setTipo(entidade.getTipo());
-			antigo.setTitulo(entidade.getTitulo());
-			return antigo.clone();
+	public Promocao salvar(Promocao entidade) {
+		Promocao promocao = null;
+		try {
+			if (entidade.getCodigo() == null) {
+				entidade.setCodigo(autoIncrement);
+				autoIncrement++;
+				lista.add(entidade.clone());
+				promocao = entidade;
+			} else {
+				Promocao antigo = buscaInterna(entidade.getCodigo());
+				antigo.setApenasPremium(entidade.getApenasPremium());
+				antigo.setDataValidade(entidade.getDataValidade());
+				antigo.setDescricao(entidade.getDescricao());
+				antigo.setTipo(entidade.getTipo());
+				antigo.setTitulo(entidade.getTitulo());
+				promocao = antigo.clone();
+			}
+		} catch (CloneNotSupportedException e) {
+			System.out.println(e.getMessage());
 		}
+		return promocao;
 	}
 
 	@Override
@@ -36,32 +54,34 @@ public class PromocaoDAOImpl implements PromocaoDAO {
 		return lista.removeIf(x -> x.getCodigo().equals(codigo));
 	}
 
-	private Promocao buscaInterna(Promocao entidade) {
-		Optional<Promocao> optional = lista.stream().filter(x -> x.equals(entidade)).findFirst();
-		if (optional.isPresent()) {
-			return optional.get();
+	private Promocao buscaInterna(Integer codigo) {
+		Promocao promocaoRetorno = null;
+		try {
+			Optional<Promocao> optional = lista.stream().filter(x -> x.getCodigo().equals(codigo)).findFirst();
+			if (optional.isPresent()) {
+				promocaoRetorno = optional.get();
+			} else {
+				throw new CadastroNaoEncontradoException();
+			}
+		} catch (CadastroNaoEncontradoException e) {
+			System.out.println(e.getMessage());
 		}
-		throw new CadastroNaoEncontradoException();
+		return promocaoRetorno;
 	}
 
 	@Override
 	public Promocao buscarPorId(Integer codigo) {
-		Optional<Promocao> optional = lista.stream().filter(x -> x.getCodigo().equals(codigo)).findFirst();
-		if (optional.isPresent()) {
-			return optional.get();
+		Promocao promocaoRetorno = null;
+		try {
+			Optional<Promocao> optional = lista.stream().filter(x -> x.getCodigo().equals(codigo)).findFirst();
+			if (optional.isPresent()) {
+				promocaoRetorno = optional.get().clone();
+			} else {
+				throw new CadastroNaoEncontradoException();
+			}
+		} catch (CadastroNaoEncontradoException | CloneNotSupportedException e) {
+			System.out.println(e.getMessage());
 		}
-		throw new CadastroNaoEncontradoException();
+		return promocaoRetorno;
 	}
-
-	@Override
-	public List<Promocao> buscarTodos() throws CloneNotSupportedException {
-		List<Promocao> novaLista = new ArrayList<>();
-
-		for (Promocao entidade : lista) {
-			novaLista.add(entidade.clone());
-		}
-
-		return novaLista;
-	}
-
 }

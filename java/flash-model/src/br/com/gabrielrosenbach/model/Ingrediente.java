@@ -4,7 +4,8 @@ public class Ingrediente extends GenericModel<Ingrediente> {
 
 	private String nome;
 
-	public Ingrediente(String nome) {
+	public Ingrediente(Integer codigo, String nome) {
+		super(codigo);
 		this.nome = nome;
 	}
 

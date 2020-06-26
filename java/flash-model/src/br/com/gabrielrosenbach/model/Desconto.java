@@ -5,11 +5,15 @@ public class Desconto extends GenericModel<Desconto> {
 	private Promocao promocao;
 	private Integer tipo;
 	private Double valor;
+	
+	private Integer codigoPromocao;
 
-	public Desconto(Promocao promocao, Integer tipo, Double valor) {
+	public Desconto(Integer codigo, Promocao promocao, Integer tipo, Double valor, Integer codigoPromocao) {
+		super(codigo);
 		this.promocao = promocao;
 		this.tipo = tipo;
 		this.valor = valor;
+		this.codigoPromocao = codigoPromocao;
 	}
 
 	public Promocao getPromocao() {
@@ -34,6 +38,14 @@ public class Desconto extends GenericModel<Desconto> {
 
 	public void setValor(Double valor) {
 		this.valor = valor;
+	}
+	
+	public Integer getCodigoPromocao() {
+		return codigoPromocao;
+	}
+
+	public void setCodigoPromocao(Integer codigoPromocao) {
+		this.codigoPromocao = codigoPromocao;
 	}
 
 	@Override

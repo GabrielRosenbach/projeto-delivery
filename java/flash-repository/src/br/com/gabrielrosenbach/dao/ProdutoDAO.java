@@ -2,6 +2,7 @@ package br.com.gabrielrosenbach.dao;
 
 import java.util.List;
 
+import br.com.gabrielrosenbach.dao.exception.CadastroNaoEncontradoException;
 import br.com.gabrielrosenbach.model.Produto;
 
 public interface ProdutoDAO {
@@ -10,7 +11,7 @@ public interface ProdutoDAO {
 	
 	Boolean excluir(Integer codigo);
 	
-	Produto buscarPorId(Integer codigo);
+	Produto buscarPorId(Integer codigo) throws CadastroNaoEncontradoException, CloneNotSupportedException;
 	
 	List<Produto> buscarTodos();
 }
